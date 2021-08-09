@@ -13,6 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.recyclerhero.R;
+import com.example.recyclerhero.listeners.OnRecyclerItemsClickListener;
 import com.example.recyclerhero.model.Person;
 
 import java.util.ArrayList;
@@ -23,13 +24,15 @@ public class PersonRecyclerViewAdapter extends RecyclerView.Adapter<PersonRecycl
 
     Context context;
     ArrayList<Person> dataList;
+    OnRecyclerItemsClickListener listener;
 
 
 
 
-    public PersonRecyclerViewAdapter(Context context, ArrayList<Person> dataList) {
+    public PersonRecyclerViewAdapter(Context context, ArrayList<Person> dataList, OnRecyclerItemsClickListener listener) {
         this.context = context;
         this.dataList = dataList;
+        this.listener = listener;
     }
 
 
@@ -47,6 +50,12 @@ public class PersonRecyclerViewAdapter extends RecyclerView.Adapter<PersonRecycl
         Person currentPerson  = dataList.get(position);
 
         holder.name.setText(currentPerson.name);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                listener.onItemClicked(currentPerson);
+            }
+        });
     }
 
     @Override

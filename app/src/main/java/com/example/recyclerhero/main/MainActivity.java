@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.recyclerhero.R;
 import com.example.recyclerhero.adapter.PersonRecyclerViewAdapter;
+import com.example.recyclerhero.listeners.OnRecyclerItemsClickListener;
 import com.example.recyclerhero.model.Person;
 
 import java.util.ArrayList;
@@ -16,12 +19,15 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     PersonRecyclerViewAdapter adapter;
+    Context context;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        context = this;
 
         //init your view
         recyclerView = findViewById(R.id.main_recycler);
@@ -30,7 +36,12 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         //make recycler view adapter
-        adapter = new PersonRecyclerViewAdapter(this, createRecyclerData());
+        adapter = new PersonRecyclerViewAdapter(this, createRecyclerData(), new OnRecyclerItemsClickListener() {
+            @Override
+            public void onItemClicked(Person person) {
+                Toast.makeText(context, "Selected item is: "+person.name, Toast.LENGTH_LONG).show();
+            }
+        });
 
         //set the adapter
         recyclerView.setAdapter(adapter);
