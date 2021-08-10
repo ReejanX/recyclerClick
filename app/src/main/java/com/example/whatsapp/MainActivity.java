@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
     private ArrayList<Model> innitData() {
         ArrayList<Model> data = new ArrayList<>();
 
